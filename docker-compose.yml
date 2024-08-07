@@ -7,17 +7,24 @@ services:
       - app:/app
     depends_on:
       - db
-    ports:
-       - 4000:4000
     command: '/run.sh'
-    networks:
-      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=my_app_network"
+      - "traefik.http.services.my_app_app_service.loadbalancer.server.port=4000"
+      - "traefik.http.routers.my_app_app_unsecure.rule=Host(`app.my-app.localhost`)"
+      - "traefik.http.routers.my_app_app_unsecure.entrypoints=web"
+      - "traefik.http.routers.my_app_app_unsecure.service=my_app_app_service"
+      - "traefik.http.routers.my_app_app_unsecure.middlewares=my_app_app_secure_middleware"
+      - "traefik.http.middlewares.my_app_app_secure_middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.my_app_app_secure.entrypoints=web-ssl"
+      - "traefik.http.routers.my_app_app_secure.rule=Host(`app.my-app.localhost`)"
+      - "traefik.http.routers.my_app_app_secure.service=my_app_app_service"
+      - "traefik.http.routers.my_app_app_secure.tls=true"
 
   db:
     image: postgres:16.3-alpine
     command: 'postgres -c "max_connections=200"'
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -27,8 +34,13 @@ services:
         target: /var/lib/postgresql/data
         volume:
           nocopy: true
-    networks:
-      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=my_app_network"
+      - "traefik.tcp.routers.my_app_db.rule=HostSNI(`db.my_app.localhost`)"
+      - "traefik.tcp.routers.my_app_db.entryPoints=postgres"
+      - "traefik.tcp.routers.my_app_db.tls=true"
+      - "traefik.tcp.services.my_app_db_service.loadbalancer.server.port=5432"
 
   # Standalone container for npm handling
   assets:
@@ -49,4 +61,8 @@ volumes:
       o: bind
       type: none
       device: .
+
+networks:
+  default:
+    name: my_app_network
 
