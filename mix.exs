@@ -39,7 +39,7 @@ defmodule MyApp.MixProject do
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       # TODO bump on release to {:phoenix_live_view, "~> 1.0.0"},
-      {:phoenix_live_view, "~> 1.0.0-rc.1", override: true},
+      {:phoenix_live_view, "~> 1.0.0-rc.6", override: true},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
@@ -58,7 +58,9 @@ defmodule MyApp.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:ash, "~> 3.0"},
+      {:igniter, "~> 0.3"}
     ]
   end
 

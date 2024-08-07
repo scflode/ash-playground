@@ -18,6 +18,7 @@ WORKDIR /app
 RUN mix local.hex --force \
   && mix local.rebar --force \
   && mix archive.install hex phx_new --force \
+  && mix archive.install hex igniter_new --force \
   && echo
 
 COPY run.sh /
