@@ -4,7 +4,7 @@ import Config
 config :my_app, MyApp.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
+  hostname: "db",
   database: "my_app_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
