@@ -37,7 +37,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=my_app_network"
-      - "traefik.tcp.routers.my_app_db.rule=HostSNI(`db.my_app.localhost`)"
+      - "traefik.tcp.routers.my_app_db.rule=HostSNI(`db.my-app.localhost`)"
       - "traefik.tcp.routers.my_app_db.entryPoints=postgres"
       - "traefik.tcp.routers.my_app_db.tls=true"
       - "traefik.tcp.services.my_app_db_service.loadbalancer.server.port=5432"

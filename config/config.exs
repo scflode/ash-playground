@@ -7,6 +7,9 @@
 # General application configuration
 import Config
 
+config :spark, formatter: ["Ash.Resource": [section_order: [:postgres]]]
+config :my_app, :ash_domains, [MyApp.Helpdesk.Support]
+
 config :my_app,
   ecto_repos: [MyApp.Repo],
   generators: [timestamp_type: :utc_datetime]
