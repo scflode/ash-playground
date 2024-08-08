@@ -1,7 +1,16 @@
 defmodule MyApp.Helpdesk.Support.Representative do
   use Ash.Resource,
     domain: MyApp.Helpdesk.Support,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    extensions: [AshGraphql.Resource]
+
+  graphql do
+    type :representative
+
+    queries do
+      list :list_representatives, :read
+    end
+  end
 
   postgres do
     table "representatives"

@@ -1,5 +1,6 @@
 defmodule MyApp.Helpdesk.Support do
-  use Ash.Domain
+  use Ash.Domain,
+    extensions: [AshGraphql.Domain]
 
   resources do
     resource MyApp.Helpdesk.Support.Ticket

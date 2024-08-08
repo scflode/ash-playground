@@ -1,7 +1,23 @@
 defmodule MyApp.Helpdesk.Support.Ticket do
   use Ash.Resource,
     domain: MyApp.Helpdesk.Support,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    extensions: [AshGraphql.Resource]
+
+  graphql do
+    type :ticket
+
+    queries do
+      get :get_ticket, :read
+      list :list_tickets, :read
+    end
+
+    mutations do
+      create :create_ticket, :open
+      update :assign_ticket, :assign
+      update :close_ticket, :close
+    end
+  end
 
   postgres do
     table "tickets"

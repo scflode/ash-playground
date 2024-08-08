@@ -7,7 +7,12 @@
 # General application configuration
 import Config
 
-config :spark, formatter: ["Ash.Resource": [section_order: [:postgres]]]
+config :spark,
+  formatter: [
+    "Ash.Resource": [section_order: [:graphql, :postgres]],
+    "Ash.Domain": [section_order: [:graphql]]
+  ]
+
 config :my_app, :ash_domains, [MyApp.Helpdesk.Support]
 
 config :my_app,
