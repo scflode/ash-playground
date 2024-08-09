@@ -6,10 +6,6 @@ defmodule MyApp.Helpdesk.Support.Representative do
 
   graphql do
     type :representative
-
-    queries do
-      list :list_representatives, :read
-    end
   end
 
   postgres do
@@ -35,5 +31,21 @@ defmodule MyApp.Helpdesk.Support.Representative do
 
   relationships do
     has_many :tickets, MyApp.Helpdesk.Support.Ticket
+  end
+
+  aggregates do
+    count :total_tickets, :tickets
+
+    count :open_tickets, :tickets do
+      filter expr(status == :open)
+    end
+
+    count :closed_tickets, :tickets do
+      filter expr(status == :closed)
+    end
+  end
+
+  calculations do
+    calculate :percent_open, :float, expr(open_tickets / total_tickets)
   end
 end
